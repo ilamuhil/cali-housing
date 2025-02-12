@@ -35,6 +35,8 @@ jobs:
         EB_CLI_USER: ${{ secrets.AWS_ACCESS_KEY_ID }}
         EB_CLI_SECRET: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
       run: |
+        echo "EB_CLI_USER=${{ secrets.AWS_ACCESS_KEY_ID }}" >> $GITHUB_ENV
+        echo "EB_CLI_SECRET=${{ secrets.AWS_ACCESS_KEY_SECRET }}" >> $GITHUB_ENV
         eb init "California Housing" --region ap-south-1 --platform "arn:aws:elasticbeanstalk:ap-south-1::platform/Docker running on 64bit Amazon Linux 2023/4.4.3" --verbose
         eb use cali-housing-env
         eb deploy
