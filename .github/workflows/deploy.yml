@@ -1,0 +1,40 @@
+name: Deploy to AWS Elastic Beanstalk
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.12'
+
+    - name: Install AWS Elastic Beanstalk CLI
+      run: |
+        pip install --upgrade pip
+        pip install awsebcli
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
+        aws-region: ap-south-1
+
+    - name: Deploy to Elastic Beanstalk
+      env:
+        EB_CLI_USER: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        EB_CLI_SECRET: ${{ secrets.AWS_ACCESS_KEY_SECRET }}
+      run: |
+        eb init "California Housing" --region ap-south-1 --platform "arn:aws:elasticbeanstalk:ap-south-1::platform/Docker running on 64bit Amazon Linux 2023/4.4.3" --verbose
+        eb use cali-housing-env
+        eb deploy
