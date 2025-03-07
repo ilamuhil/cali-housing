@@ -32,7 +32,7 @@ def train_model(X_train,y_train,path_to_save_model=None):
     save_model(search,path_to_save_model)
   return search.best_estimator_
   
-loc = ['longitude','latitude']
+loc = ['longitude','latitude'] #location columns
 def main():
     housing_data = load_data()
     housing_data['ocean_proximity'] = housing_data['ocean_proximity'].astype('category')
@@ -69,4 +69,6 @@ def main():
   
 if __name__ == "__main__":
   main()
-  logging.info(f"Model trained successfully and saved to models/best_model.pkl")  
+  logging.info(f"Model trained successfully and saved to models/best_model.pkl")
+  
+  

@@ -5,8 +5,11 @@ import logging
 logging.basicConfig(level=logging.INFO)
 
 def save_model(model, path):
-  joblib.dump(model, path)
-  logging.info(f"Model saved to {path}")
+  if not path: print("No path provided")
+  elif not model : print("No model provided")
+  else:
+    joblib.dump(model, path)
+    logging.info(f"Model saved to {path}")
 
 def delete_model(path):
   if os.path.exists(path):
