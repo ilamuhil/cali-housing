@@ -24,6 +24,7 @@ class HousingModel(BaseModel):
     median_income: float
     ocean_proximity: str
 
+
 class Prediction(BaseModel):
     prediction: float
     
